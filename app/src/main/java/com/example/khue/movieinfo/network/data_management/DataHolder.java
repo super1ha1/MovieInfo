@@ -3,8 +3,11 @@ package com.example.khue.movieinfo.network.data_management;
 
 import com.example.khue.movieinfo.model.Movie;
 import com.example.khue.movieinfo.model.MovieList;
+import com.example.khue.movieinfo.model.RelatedMovieList;
+import com.example.khue.movieinfo.model.VideoList;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -29,6 +32,25 @@ public class DataHolder {
     private  List<Movie> movieListFromAPI = new ArrayList<Movie>();
     private  List<Movie> movieListFromDatabase = new ArrayList<Movie>();
     private Movie currentMovieDetail = null;
+    private HashMap<String, RelatedMovieList> relatedMovieMap = new HashMap<String, RelatedMovieList>();
+
+    public HashMap<String, VideoList> getMovieVideoMap() {
+        return movieVideoMap;
+    }
+
+    public void setMovieVideoMap(HashMap<String, VideoList> movieVideoMap) {
+        this.movieVideoMap = movieVideoMap;
+    }
+
+    private HashMap<String, VideoList> movieVideoMap = new HashMap<String, VideoList>();
+
+    public HashMap<String, RelatedMovieList> getRelatedMovieMap() {
+        return relatedMovieMap;
+    }
+
+    public void setRelatedMovieMap(HashMap<String, RelatedMovieList> relatedMovieMap) {
+        this.relatedMovieMap = relatedMovieMap;
+    }
 
     public MovieList getNowShowingMovieList() {
         return nowShowingMovieList;

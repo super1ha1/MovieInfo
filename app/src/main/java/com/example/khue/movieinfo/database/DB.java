@@ -25,12 +25,12 @@ public class DB {
 
 
     private static void closeDb() {
-//        return;
-		if(dbHelper.isOpen())
-		{
-			dbHelper.close();
-			dbHelper = null;
-		}
+        return;
+//		if(dbHelper.isOpen())
+//		{
+//			dbHelper.close();
+//			dbHelper = null;
+//		}
 
     }
 

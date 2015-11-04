@@ -1,14 +1,31 @@
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nowShowingGridview"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:columnWidth="150dp"
-    android:numColumns="auto_fit"
-    android:verticalSpacing="3gdp"
-    android:horizontalSpacing="10dp"
-    android:stretchMode="columnWidth"
-    android:gravity="center"
-    />
+    android:orientation="vertical"
+    >
+    <GridView
+        android:id="@+id/grid_view_now_showing"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="150dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_item"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/text_normal"
+        />
+</LinearLayout>
+
 
 
 

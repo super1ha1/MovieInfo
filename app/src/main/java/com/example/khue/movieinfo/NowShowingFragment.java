@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.example.khue.movieinfo.model.Movie;
 import com.example.khue.movieinfo.network.callbacks.DataOperationCallBack;
@@ -18,10 +19,15 @@ import com.example.khue.movieinfo.network.data_management.DataManager;
 import com.example.khue.movieinfo.utils.Const;
 import com.example.khue.movieinfo.utils.Utils;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 
 public class NowShowingFragment extends Fragment {
 
-    private GridView  gridView;
+    private View rootView;
+    @Bind(R.id.grid_view_now_showing) GridView  gridView;
+    @Bind(R.id.empty_view) TextView emptyView;
     private MovieListAdapter adapter;
 
     private int visibleThreshold = 0;
@@ -41,6 +47,12 @@ public class NowShowingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(Const.TAG_APP, "On resume NowShowing : load movie");
         getAllMovieShowing();
     }
 
@@ -49,9 +61,13 @@ public class NowShowingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         try {
-            gridView =  (GridView) inflater.inflate(R.layout.fragment_now_showing, container, false);
+            rootView =   inflater.inflate(R.layout.fragment_now_showing, container, false);
+            ButterKnife.bind(this, rootView);
+
             adapter = new MovieListAdapter(getActivity(), DataHolder.getInstance().getMovieListFromAPI());
             gridView.setAdapter(adapter);
+
+            gridView.setEmptyView(emptyView);
 
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v,
@@ -62,6 +78,7 @@ public class NowShowingFragment extends Fragment {
                             + " title: " + movie.getTitle());
 
                     Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+                    intent.putExtra(Const.FROM_DATABASE, false);
                     de.greenrobot.event.EventBus.getDefault().postSticky(movie);
                     startActivity(intent);
                 }
@@ -106,7 +123,7 @@ public class NowShowingFragment extends Fragment {
             e.printStackTrace();
         }
 
-        return gridView;
+        return rootView;
     }
     public void getAllMovieShowing() {
         DataManager.getInstance(getActivity().getApplicationContext())
@@ -130,7 +147,12 @@ public class NowShowingFragment extends Fragment {
 //            ((MovieListAdapter)adapter).updateAdapter(DataHolder.getInstance().getMovieListFromAPI());
 //            Log.d(Const.TAG_APP, "Notify Data set change on Now showing movie; ");
 //        }
-        adapter.updateAdapter(DataHolder.getInstance().getMovieListFromAPI());
-        Log.d(Const.TAG_APP, "Notify Data set change on Now showing movie; ");
+        try {
+            if( adapter != null)
+                adapter.updateAdapter(DataHolder.getInstance().getMovieListFromAPI());
+            Log.d(Const.TAG_APP, "Notify Data set change on Now showing movie; ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

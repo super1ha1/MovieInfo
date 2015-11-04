@@ -1,10 +1,10 @@
 package com.example.khue.movieinfo.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -48,12 +48,15 @@ public class Utils {
     }
 
     public static String getCompleteImageURL(String posterPath){
-        if( posterPath == null || TextUtils.isEmpty(posterPath)){
-            return null;
-        }
         return Const.BASE_IMAGE_URL +
                 posterPath + Const.API_KEY;
     }
+
+    public static String getYoutubeVideoURL(String videoId){
+        return Const.BASE_YOUTUBE_URL +
+                videoId + Const.BASE_YOUTUBE_IMAGE;
+    }
+
     public static void writeToFile(Context context, String data, String fileName) {
         try {
 //            File path = context.getExternalFilesDir(null);
@@ -100,5 +103,34 @@ public class Utils {
         }
 
         return ret;
+    }
+    public static String saveBitmapToFile(String fileName, Bitmap bitmap){
+        OutputStream output;
+        File file;
+
+        // Find the SD Card path
+        File filepath = Environment.getExternalStorageDirectory();
+
+        // Create a new folder in SD Card
+        File dir = new File(filepath.getAbsolutePath()
+                + Const.APP_FOLDER);
+        dir.mkdirs();
+
+        // Create a name for the saved image
+        file = new File(dir, fileName + ".jpg");
+
+        try {
+            output = new FileOutputStream(file);
+            // Compress into jpg format image from 0% - 100%
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+            output.flush();
+            output.close();
+        }
+
+        catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return file.getAbsolutePath();
     }
 }

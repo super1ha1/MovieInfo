@@ -5,27 +5,27 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.RadioGroup;
+import android.widget.TextView;
 
-import com.example.khue.movieinfo.network.callbacks.DataOperationCallBack;
-import com.example.khue.movieinfo.network.data_management.DataHolder;
-import com.example.khue.movieinfo.network.data_management.DataManager;
-import com.example.khue.movieinfo.utils.Const;
 import com.example.khue.movieinfo.utils.PreferenceManager;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class AllMovieActivity extends AppCompatActivity {
 
-    private ViewPager viewPager;
-    private ViewPagerAdapter viewPagerAdapter;
-    private RadioGroup mTabs;
+     @Bind(R.id.pager) ViewPager viewPager;
+     @Bind(R.id.viewpagertab) SmartTabLayout viewPagerTab;
+     @Bind(R.id.toolbar) Toolbar toolbar;
+
+    private  ViewPagerAdapter viewPagerAdapter;
     PreferenceManager pm = null;
     private int page = 1 ;
 
@@ -34,39 +34,35 @@ public class AllMovieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_movie);
 
-//        DBSetupManager.setup(getApplicationContext());
         pm = new PreferenceManager(AllMovieActivity.this.getApplicationContext());
         initView();
     }
 
     private void initView() {
         try {
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            ButterKnife.bind(this);
             setSupportActionBar(toolbar);
 
             viewPagerAdapter = new ViewPagerAdapter( getSupportFragmentManager(), AllMovieActivity.this.getApplicationContext());
-            viewPager = (ViewPager) findViewById(R.id.pager);
-            if( viewPager == null){
-                Log.d(Const.TAG_APP, "View pager is null");
-            }
             viewPager.setAdapter(viewPagerAdapter);
 
-            mTabs = (RadioGroup) findViewById(R.id.radio_tabs);
-            mTabs.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    switch (checkedId) {
-                        case R.id.tab_now_showing:
-                            viewPager.setCurrentItem(0);
-                            break;
-                        case R.id.tab_favorite:
-                            viewPager.setCurrentItem(1);
-                            break;
-                    }
-                }
-            });
-
-            viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            mTabs = (RadioGroup) findViewById(R.id.radio_tabs);
+//            mTabs.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                    switch (checkedId) {
+//                        case R.id.tab_now_showing:
+//                            viewPager.setCurrentItem(0);
+//                            break;
+//                        case R.id.tab_favorite:
+//                            viewPager.setCurrentItem(1);
+//                            break;
+//                    }
+//                }
+//            });
+            viewPagerTab.setViewPager(viewPager);
+            ((TextView)viewPagerTab.getTabAt(0)).setTextColor(ContextCompat.getColor(AllMovieActivity.this, R.color.white));
+            viewPagerTab.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -74,7 +70,16 @@ public class AllMovieActivity extends AppCompatActivity {
 
                 @Override
                 public void onPageSelected(int position) {
-
+                    viewPager.setCurrentItem(position);
+                    for( int i = 0 ; i < viewPagerAdapter.getCount(); i++){
+                        TextView view = (TextView) viewPagerTab.getTabAt(i);
+                        if( i == position){
+//                            view.setTextColor(ContextCompat.getColor(AllMovieActivity.this, R.color.view_pager_color));
+                            view.setTextColor(ContextCompat.getColor(AllMovieActivity.this, R.color.white));
+                        }else {
+                            view.setTextColor(ContextCompat.getColor(AllMovieActivity.this, R.color.movie_background_color));
+                        }
+                    }
                 }
 
                 @Override
@@ -82,6 +87,37 @@ public class AllMovieActivity extends AppCompatActivity {
 
                 }
             });
+
+//            viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//                @Override
+//                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//                }
+//
+//                @Override
+//                public void onPageSelected(int position) {
+////                    mTabs.check(position);
+////                    RadioButton buttonSelected = (RadioButton) findViewById(RADIO_BUTTON[position]);
+////                    Drawable topButtonSelected = getResources().getDrawable(ICONS_SELECTED[position]);
+////                    buttonSelected.setCompoundDrawablesWithIntrinsicBounds(null, topButtonSelected, null, null);
+////
+////                    for (int index = 0; index < RADIO_BUTTON.length; index++) {
+////                        if (index != position) {
+////                            RadioButton button = (RadioButton) findViewById(RADIO_BUTTON[index]);
+////                            Drawable top = getResources().getDrawable(ICONS[index]);
+////                            button.setCompoundDrawablesWithIntrinsicBounds(null, top, null, null);
+////                        }
+////                    }
+////                    Storage.currentTabPosition = position;
+////                    Log.d(TAG, "CurRent position: " + Storage.currentTabPosition);
+//
+//                }
+//
+//                @Override
+//                public void onPageScrollStateChanged(int state) {
+//
+//                }
+//            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,35 +128,6 @@ public class AllMovieActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-    }
-
-
-
-    public void getAllMovieTest() {
-        Log.d(Const.TAG_APP, "Start Load movie list here");
-        DataManager dataManager = DataManager.getInstance(AllMovieActivity.this.getApplicationContext());
-        dataManager.getMovieList(AllMovieActivity.this, page, new DataOperationCallBack() {
-            @Override
-            public void failure() {
-                Log.d(Const.TAG_APP, "DataCall Load movie list error");
-            }
-
-            @Override
-            public void success() {
-                Log.d(Const.TAG_APP, "DataCall Load movie list success");
-                //TODO do something the UI for the wine deleted
-                updateMovieGridView();
-            }
-        });
-    }
-
-    private void updateMovieGridView() {
-        GridView gridView = (GridView) findViewById(R.id.nowShowingGridview);
-        if( gridView != null ){
-            BaseAdapter adapter  = (BaseAdapter)gridView.getAdapter();
-            ((MovieListAdapter)adapter).updateAdapter(DataHolder.getInstance().getMovieListFromAPI());
-            Log.d(Const.TAG_APP, "Notify Data set change on Now showing movie; ");
-        }
     }
 
     private static class ViewPagerAdapter extends FragmentPagerAdapter {

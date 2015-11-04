@@ -15,19 +15,17 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
-import java.io.File;
 import java.sql.SQLException;
 
 public class DBHelper extends OrmLiteSqliteOpenHelper {
 
-	private static final String DB_NAME = "movieinfo.sqlite";
+	private static final String DB_NAME = "movieinfo";
 	private static final int DB_VERSION = 1;
 
 	private RuntimeExceptionDao<Movie, Integer> MovieDao = null;
 
-
 	public DBHelper(Context context) {
-		super(context, context.getFilesDir().getPath() + File.separator + DB_NAME ,null, DB_VERSION);
+		super(context, DB_NAME ,null, DB_VERSION);
 		Log.e(Const.TAG_APP, "DB Helper Constructor");
 	}
 

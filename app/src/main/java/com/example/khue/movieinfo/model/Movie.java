@@ -3,19 +3,101 @@ package com.example.khue.movieinfo.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Generated;
-
-@Generated("org.jsonschema2pojo")
+@DatabaseTable(tableName = "movies")
 public class Movie {
+    public Movie(String localImagePosterURL, String localBackDropURL, Boolean favorite, boolean adult, String backdropPath, List<Integer> genreIds, int id, String originalLanguage, String originalTitle, String overview, String releaseDate, String posterPath, double popularity, String title, boolean video, double voteAverage, int voteCount) {
+        this.localImagePosterURL = localImagePosterURL;
+        this.localBackDropURL = localBackDropURL;
+        this.favorite = favorite;
+        this.adult = adult;
+        this.backdropPath = backdropPath;
+        this.genreIds = genreIds;
+        this.id = id;
+        this.originalLanguage = originalLanguage;
+        this.originalTitle = originalTitle;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+        this.posterPath = posterPath;
+        this.popularity = popularity;
+        this.title = title;
+        this.video = video;
+        this.voteAverage = voteAverage;
+        this.voteCount = voteCount;
+    }
 
+    public Movie(String localImagePosterURL, String localBackDropURL, boolean adult, String backdropPath, int id, String originalLanguage, String originalTitle, String overview, String releaseDate, String posterPath, double popularity, String title, boolean video, double voteAverage, int voteCount) {
+        this.localImagePosterURL = localImagePosterURL;
+        this.localBackDropURL = localBackDropURL;
+        this.adult = adult;
+        this.backdropPath = backdropPath;
+        this.id = id;
+        this.originalLanguage = originalLanguage;
+        this.originalTitle = originalTitle;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+        this.posterPath = posterPath;
+        this.popularity = popularity;
+        this.title = title;
+        this.video = video;
+        this.voteAverage = voteAverage;
+        this.voteCount = voteCount;
+    }
+
+    private List<Movie> relatedMovieList;
+
+
+    public List<Movie> getRelatedMovieList() {
+        return relatedMovieList;
+    }
+
+    public void setRelatedMovieList(List<Movie> relatedMovieList) {
+        this.relatedMovieList = relatedMovieList;
+    }
+
+    @DatabaseField
+    private String localImagePosterURL;
+
+    @DatabaseField
+    private String localBackDropURL;
+
+    public String getLocalBackDropURL() {
+        return localBackDropURL;
+    }
+
+    public void setLocalBackDropURL(String localBackDropURL) {
+        this.localBackDropURL = localBackDropURL;
+    }
+
+    private Boolean favorite = false;
+    public String getLocalImagePosterURL() {
+        return localImagePosterURL;
+    }
+
+    public void setLocalImagePosterURL(String localImagePosterURL) {
+        this.localImagePosterURL = localImagePosterURL;
+    }
+
+    public Boolean getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
+    }
+
+
+    @DatabaseField
     @SerializedName("adult")
     @Expose
     private boolean adult;
 
+    @DatabaseField
     @SerializedName("backdrop_path")
     @Expose
     private String backdropPath;
@@ -24,46 +106,57 @@ public class Movie {
     @Expose
     private List<Integer> genreIds = new ArrayList<Integer>();
 
+    @DatabaseField(generatedId=true, allowGeneratedIdInsert=true)
     @SerializedName("id")
     @Expose
     private int id;
 
+    @DatabaseField
     @SerializedName("original_language")
     @Expose
     private String originalLanguage;
 
+    @DatabaseField
     @SerializedName("original_title")
     @Expose
     private String originalTitle;
 
+    @DatabaseField
     @SerializedName("overview")
     @Expose
     private String overview;
 
+    @DatabaseField
     @SerializedName("release_date")
     @Expose
     private String releaseDate;
 
+    @DatabaseField
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
 
+    @DatabaseField
     @SerializedName("popularity")
     @Expose
     private double popularity;
 
+    @DatabaseField
     @SerializedName("title")
     @Expose
     private String title;
 
+    @DatabaseField
     @SerializedName("video")
     @Expose
     private boolean video;
 
+    @DatabaseField
     @SerializedName("vote_average")
     @Expose
     private double voteAverage;
 
+    @DatabaseField
     @SerializedName("vote_count")
     @Expose
     private int voteCount;
@@ -171,6 +264,9 @@ public class Movie {
     public int getId() {
         return id;
     }
+
+
+    public String getStringId(){return String.valueOf(id); }
 
     /**
      * 

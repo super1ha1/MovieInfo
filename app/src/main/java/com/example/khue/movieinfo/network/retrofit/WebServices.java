@@ -4,9 +4,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.khue.movieinfo.model.MovieList;
+import com.example.khue.movieinfo.model.RelatedMovieList;
+import com.example.khue.movieinfo.model.VideoList;
 import com.example.khue.movieinfo.network.callbacks.GeneralWebServiceCallback;
 import com.example.khue.movieinfo.utils.Const;
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,21 +74,68 @@ public class WebServices {
         try {
             RestClient client = getClient();
             APIService service = client.getApiService();
-            service.getRelatedMovie(movieId, api_key, page, new Callback<Object>() {
+            service.getRelatedMovie(movieId, api_key, page, new Callback<RelatedMovieList>() {
                 @Override
-                public void success(Object objectReceive, Response response) {
+                public void success(RelatedMovieList objectReceive, Response response) {
                     try {
-                        Gson gson = new Gson();
-                        String jsonString = gson.toJson(objectReceive);
+//                        Gson gson = new Gson();
+//                        String jsonString = gson.toJson(objectReceive);
+//
+//                        if (jsonString.contains("\"status_code\"")) {
+//                            JSONObject error = new JSONObject(jsonString);
+//                            callback.failure(error);
+//                        } else {
+//                            JSONObject object = new JSONObject(jsonString);
+//                            callback.success(object);
+//                        }
+                        callback.success(objectReceive);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
-                        if (jsonString.contains("\"status_code\"")) {
-                            JSONObject error = new JSONObject(jsonString);
-                            callback.failure(error);
-                        } else {
-                            JSONObject object = new JSONObject(jsonString);
-                            callback.success(object);
-                        }
+                @Override
+                public void failure(RetrofitError error) {
+                    try {
+                        Log.e(Const.TAG_FAILURE, "RetrofitError: " + error.getMessage());
+                        error.printStackTrace();
+
+                        JSONObject errorMessage = new JSONObject();
+                        errorMessage.put("message", error.getMessage());
+                        callback.failure(errorMessage);
                     } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void getVideoList(final Context context,String movieId,  String api_key,
+                                      final GeneralWebServiceCallback callback){
+        try {
+            RestClient client = getClient();
+            APIService service = client.getApiService();
+            service.getMovieVideo(movieId, api_key, new Callback<VideoList>() {
+                @Override
+                public void success(VideoList objectReceive, Response response) {
+                    try {
+//                        Gson gson = new Gson();
+//                        String jsonString = gson.toJson(objectReceive);
+//
+//                        if (jsonString.contains("\"status_code\"")) {
+//                            JSONObject error = new JSONObject(jsonString);
+//                            callback.failure(error);
+//                        } else {
+//                            JSONObject object = new JSONObject(jsonString);
+//                            callback.success(object);
+//                        }
+                        callback.success(objectReceive);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

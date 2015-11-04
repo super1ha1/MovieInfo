@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimary">#212c3a</color>-->
+    <!--<color name="colorPrimary">#8a8a8a</color>-->
+    <color name="colorPrimary">#000000</color>
+
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <!--<color name="colorPrimaryDark">#212c3a</color>-->
+    <!--<color name="colorPrimaryDark">#8a8a8a</color>-->
+    <color name="colorPrimaryDark">#000000</color>
+
     <color name="colorAccent">#FF4081</color>
-    <color name="backgroud_color">#f7f7f7</color>
+    <color name="background_color">#f7f7f7</color>
     <color name="movie_background_color">#233852</color>
     <color name="movie_title_color">#abc2d1</color>
     <color name="view_pager_title_color">#44ab4a</color>
     <color name="movie_info_color">#dddddd</color>
+    <color name="view_pager_color">#34b446</color>
+    <color name="transparent">#00000000</color>
+    <color name="black_20">#33000000</color>
+    <color name="black_21">#cec8c8</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="action_bar_color">#364860</color>
+    <!--<color name="action_bar_color">#eef2f6</color>-->
+
+
 </resources>

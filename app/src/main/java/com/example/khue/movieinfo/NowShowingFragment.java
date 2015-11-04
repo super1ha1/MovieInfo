@@ -47,13 +47,13 @@ public class NowShowingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getAllMovieShowing();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         Log.d(Const.TAG_APP, "On resume NowShowing : load movie");
-        getAllMovieShowing();
     }
 
     @Override
@@ -142,11 +142,6 @@ public class NowShowingFragment extends Fragment {
     }
 
     private void updateMovieGridView() {
-//        if( gridView != null ){
-//            BaseAdapter adapter  = (BaseAdapter) gridView.getAdapter();
-//            ((MovieListAdapter)adapter).updateAdapter(DataHolder.getInstance().getMovieListFromAPI());
-//            Log.d(Const.TAG_APP, "Notify Data set change on Now showing movie; ");
-//        }
         try {
             if( adapter != null)
                 adapter.updateAdapter(DataHolder.getInstance().getMovieListFromAPI());

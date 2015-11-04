@@ -76,6 +76,8 @@ public class RelatedMovieFragment extends Fragment {
                     DataHolder.getInstance().getRelatedMovieMap().get(movieId).getMovies());
             gridView.setAdapter(relatedMovieAdapter);
 
+
+
             gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(AbsListView absListView, int i) {

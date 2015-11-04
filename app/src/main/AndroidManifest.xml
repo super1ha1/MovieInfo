@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".AllMovieActivity"
+            android:name=".presentation.activities.AllMovieActivity"
             android:label="@string/discover"
             android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
@@ -27,8 +27,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MovieDetailActivity"
+            android:name=".presentation.activities.MovieDetailActivity"
             android:label="@string/title_activity_movie_detail"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>

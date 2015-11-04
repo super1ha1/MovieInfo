@@ -11,9 +11,9 @@ import java.util.List;
 
 @DatabaseTable(tableName = "movies")
 public class Movie {
-    public Movie(String localImagePosterURL, String localBackDropURL, Boolean favorite, boolean adult, String backdropPath, List<Integer> genreIds, int id, String originalLanguage, String originalTitle, String overview, String releaseDate, String posterPath, double popularity, String title, boolean video, double voteAverage, int voteCount) {
-        this.localImagePosterURL = localImagePosterURL;
-        this.localBackDropURL = localBackDropURL;
+    public Movie(String localPosterPath, String localBackDropPath, Boolean favorite, boolean adult, String backdropPath, List<Integer> genreIds, int id, String originalLanguage, String originalTitle, String overview, String releaseDate, String posterPath, double popularity, String title, boolean video, double voteAverage, int voteCount) {
+        this.localPosterPath = localPosterPath;
+        this.localBackDropPath = localBackDropPath;
         this.favorite = favorite;
         this.adult = adult;
         this.backdropPath = backdropPath;
@@ -31,9 +31,9 @@ public class Movie {
         this.voteCount = voteCount;
     }
 
-    public Movie(String localImagePosterURL, String localBackDropURL, boolean adult, String backdropPath, int id, String originalLanguage, String originalTitle, String overview, String releaseDate, String posterPath, double popularity, String title, boolean video, double voteAverage, int voteCount) {
-        this.localImagePosterURL = localImagePosterURL;
-        this.localBackDropURL = localBackDropURL;
+    public Movie(String localPosterPath, String localBackDropPath, boolean adult, String backdropPath, int id, String originalLanguage, String originalTitle, String overview, String releaseDate, String posterPath, double popularity, String title, boolean video, double voteAverage, int voteCount) {
+        this.localPosterPath = localPosterPath;
+        this.localBackDropPath = localBackDropPath;
         this.adult = adult;
         this.backdropPath = backdropPath;
         this.id = id;
@@ -49,38 +49,27 @@ public class Movie {
         this.voteCount = voteCount;
     }
 
-    private List<Movie> relatedMovieList;
-
-
-    public List<Movie> getRelatedMovieList() {
-        return relatedMovieList;
-    }
-
-    public void setRelatedMovieList(List<Movie> relatedMovieList) {
-        this.relatedMovieList = relatedMovieList;
-    }
+    @DatabaseField
+    private String localPosterPath;
 
     @DatabaseField
-    private String localImagePosterURL;
+    private String localBackDropPath;
 
-    @DatabaseField
-    private String localBackDropURL;
-
-    public String getLocalBackDropURL() {
-        return localBackDropURL;
+    public String getLocalBackDropPath() {
+        return localBackDropPath;
     }
 
-    public void setLocalBackDropURL(String localBackDropURL) {
-        this.localBackDropURL = localBackDropURL;
+    public void setLocalBackDropPath(String localBackDropPath) {
+        this.localBackDropPath = localBackDropPath;
     }
 
     private Boolean favorite = false;
-    public String getLocalImagePosterURL() {
-        return localImagePosterURL;
+    public String getLocalPosterPath() {
+        return localPosterPath;
     }
 
-    public void setLocalImagePosterURL(String localImagePosterURL) {
-        this.localImagePosterURL = localImagePosterURL;
+    public void setLocalPosterPath(String localPosterPath) {
+        this.localPosterPath = localPosterPath;
     }
 
     public Boolean getFavorite() {

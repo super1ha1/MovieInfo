@@ -1,4 +1,4 @@
-package com.example.khue.movieinfo;
+package com.example.khue.movieinfo.presentation.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -14,8 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.example.khue.movieinfo.R;
 import com.example.khue.movieinfo.database.DB;
 import com.example.khue.movieinfo.model.Movie;
+import com.example.khue.movieinfo.presentation.fragment.RelatedMovieFragment;
+import com.example.khue.movieinfo.presentation.fragment.TrailerFragment;
 import com.example.khue.movieinfo.utils.Const;
 import com.example.khue.movieinfo.utils.Utils;
 import com.squareup.picasso.Picasso;
@@ -128,20 +131,20 @@ public class MovieDetailActivity extends AppCompatActivity {
             fromDatabase = intent.getBooleanExtra(Const.FROM_DATABASE, false);
             if( fromDatabase){
                 Log.d(Const.TAG_APP, "Load from Database"
-                        + "\n" + " poster: " + movie.getLocalImagePosterURL()
-                        + "\n" + " backdrop: " + movie.getLocalBackDropURL());
-                if(movie.getLocalImagePosterURL() != null){
+                        + "\n" + " poster: " + movie.getLocalPosterPath()
+                        + "\n" + " backdrop: " + movie.getLocalBackDropPath());
+                if(movie.getLocalPosterPath() != null){
                     Picasso.with(MovieDetailActivity.this)
-                            .load(new File(movie.getLocalImagePosterURL()))
+                            .load(new File(movie.getLocalPosterPath()))
                             .fit().centerCrop()
                             .placeholder(R.drawable.progress_animation)
                             .error(R.drawable.ic_movie_icon_2)
                             .into(posterImage);
                 }
 
-                if(movie.getLocalBackDropURL() != null){
+                if(movie.getLocalBackDropPath() != null){
                     Picasso.with(MovieDetailActivity.this)
-                            .load(new File(movie.getLocalBackDropURL()))
+                            .load(new File(movie.getLocalBackDropPath()))
                             .fit().centerCrop()
                             .placeholder(R.drawable.progress_animation)
                             .error(R.drawable.ic_movie_icon_2)
@@ -174,7 +177,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         try {
-            MovieDetailActivity.this.setTitle(movie.getTitle());
+            setTitle(movie.getTitle());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -242,22 +245,22 @@ public class MovieDetailActivity extends AppCompatActivity {
     private void addFavoriteMovieToDatabase() {
         try {
             if( movie.getPosterPath() == null){
-                movie.setLocalImagePosterURL(null);
+                movie.setLocalPosterPath(null);
             }else {
                 posterImage.buildDrawingCache();
                 Bitmap bitmap = posterImage.getDrawingCache();
                 String localPoster = Utils.saveBitmapToFile( "poster_" + String.valueOf(movie.getId()) , bitmap);
                 Log.d(Const.TAG_APP, " local poster: " + localPoster);
-                movie.setLocalImagePosterURL(localPoster);
+                movie.setLocalPosterPath(localPoster);
             }
             if( movie.getBackdropPath() == null){
-                movie.setLocalBackDropURL(null);
+                movie.setLocalBackDropPath(null);
             }else {
                 backdropImage.buildDrawingCache();
                 Bitmap bitmap = backdropImage.getDrawingCache();
                 String localBackDrop = Utils.saveBitmapToFile("backdrop_" + String.valueOf(movie.getId()), bitmap);
                 Log.d(Const.TAG_APP, " local backdrop: " + localBackDrop);
-                movie.setLocalBackDropURL(localBackDrop);
+                movie.setLocalBackDropPath(localBackDrop);
             }
 
             DB.addMovie(MovieDetailActivity.this.getApplicationContext(), movie);

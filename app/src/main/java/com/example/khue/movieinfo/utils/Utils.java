@@ -2,8 +2,6 @@ package com.example.khue.movieinfo.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
@@ -18,30 +16,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 public class Utils {
-	public static void CopyStream(InputStream is, OutputStream os)
-    {
-        final int buffer_size=1024;
-        try
-        {
-            byte[] bytes=new byte[buffer_size];
-            for(;;)
-            {
-              int count=is.read(bytes, 0, buffer_size);
-              if(count==-1)
-                  break;
-              os.write(bytes, 0, count);
-            }
-        }
-        catch(Exception ex){}
-    }
-
-    public static boolean hasNetworkConnection(Context context){
-        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) return true;
-        showToast(context, "No NetWork");
-        return false;
-    }
 
     public static void showToast(Context context, String message){
         Toast.makeText(context, message,Toast.LENGTH_SHORT).show();
@@ -59,11 +33,8 @@ public class Utils {
 
     public static void writeToFile(Context context, String data, String fileName) {
         try {
-//            File path = context.getExternalFilesDir(null);
-//            File file = new File(path, fileName);
             File file = new File(Environment.getExternalStoragePublicDirectory(
                     Environment.DIRECTORY_PICTURES), "mysdfile.txt");
-//            File myFile = new File(Environment.getDataDirectory().getPath() + "/mysdfile.txt");
             FileOutputStream outputStream = new FileOutputStream(file);
             outputStream.write(data.getBytes());
             outputStream.close();
@@ -128,7 +99,6 @@ public class Utils {
         }
 
         catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return file.getAbsolutePath();

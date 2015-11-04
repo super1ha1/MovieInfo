@@ -22,12 +22,9 @@ import org.json.JSONObject;
 import java.util.List;
 
 import javax.inject.Singleton;
-/**
- * DataManager class to handle all API request
- */
 
 /**
- * Singleton Class to handle all  retrieve and update data request
+ * Singleton Class to handle all retrieve and update data request
  */
 @Singleton
 public class DataManager {
@@ -74,33 +71,13 @@ public class DataManager {
             private void handleCallBackOnSuccess(Object data, DataOperationCallBack dataCallBack) {
                 try {
                     Log.e(Const.TAG_APP, "Get MovieList  success");
-//                    Gson gson = new Gson();
-//                    MovieList movieList =  gson.fromJson(data.toString(), MovieList.class);
-                      MovieList movieList = (MovieList) data;
-//                    JSONArray movieArray = data.getJSONArray("results");
-//                    for( int i = 0 ; i < movieArray.length(); i ++){
-//                        JSONObject movieObject = movieArray.getJSONObject(i);
-//                        if( movieObject.has("poster_path")){
-//                            String poster = movieObject.getString("poster_path");
-//                            movieList.getMovies().get(i).setPosterPath(poster);
-//                        }else {
-//                            Log.d(Const.TAG_APP," No poster: " + i);
-//                        }
-//                        if( movieObject.has("backdrop_path")){
-//                            String backdrop = movieObject.getString("backdrop_path");
-//                            movieList.getMovies().get(i).setBackdropPath(backdrop);
-//                        }else {
-//                            Log.d(Const.TAG_APP," No backdrop: " + i);
-//                        }
-//                    }
+                    MovieList movieList = (MovieList) data;
 
                     DataHolder.getInstance().setNowShowingMovieList(movieList);
                     DataHolder.getInstance().getMovieListFromAPI().addAll(movieList.getMovies());
+
                     for (int i = 0 ; i < movieList.getMovies().size() ; i ++){
                         Movie movie = movieList.getMovies().get(i);
-//                        System.out.println("id: "  + movie.getId() + "ImagePoster url: " + movie.getPosterPath()
-//                                + "\n" + " complete path: " + Utils.getCompleteImageURL(movie.getPosterPath()
-//                         + "\n"));
                         if( movie.getPosterPath() == null){
                             Log.d(Const.TAG_APP," No poster: " + i);
                         }
@@ -167,6 +144,7 @@ public class DataManager {
                     }else {
                         DataHolder.getInstance().getRelatedMovieMap().put(movieId, movieList);
                     }
+
                     for (int i = 0 ; i < movieList.getMovies().size() ; i ++){
                         Movie movie = movieList.getMovies().get(i);
                         if( movie.getPosterPath() == null){

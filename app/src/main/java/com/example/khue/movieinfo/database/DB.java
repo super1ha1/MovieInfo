@@ -1,8 +1,5 @@
 package com.example.khue.movieinfo.database;
 
-/**
- * DB hold all operation with Movie table
- */
 
 import android.content.Context;
 

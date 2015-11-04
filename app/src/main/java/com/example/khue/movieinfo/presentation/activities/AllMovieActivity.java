@@ -1,4 +1,4 @@
-package com.example.khue.movieinfo;
+package com.example.khue.movieinfo.presentation.activities;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,7 +13,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.khue.movieinfo.utils.PreferenceManager;
+import com.example.khue.movieinfo.R;
+import com.example.khue.movieinfo.presentation.fragment.FavoriteFragment;
+import com.example.khue.movieinfo.presentation.fragment.NowShowingMovieFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import butterknife.Bind;
@@ -26,15 +28,12 @@ public class AllMovieActivity extends AppCompatActivity {
      @Bind(R.id.toolbar) Toolbar toolbar;
 
     private  ViewPagerAdapter viewPagerAdapter;
-    PreferenceManager pm = null;
-    private int page = 1 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_movie);
 
-        pm = new PreferenceManager(AllMovieActivity.this.getApplicationContext());
         initView();
     }
 
@@ -46,20 +45,6 @@ public class AllMovieActivity extends AppCompatActivity {
             viewPagerAdapter = new ViewPagerAdapter( getSupportFragmentManager(), AllMovieActivity.this.getApplicationContext());
             viewPager.setAdapter(viewPagerAdapter);
 
-//            mTabs = (RadioGroup) findViewById(R.id.radio_tabs);
-//            mTabs.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//                @Override
-//                public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                    switch (checkedId) {
-//                        case R.id.tab_now_showing:
-//                            viewPager.setCurrentItem(0);
-//                            break;
-//                        case R.id.tab_favorite:
-//                            viewPager.setCurrentItem(1);
-//                            break;
-//                    }
-//                }
-//            });
             viewPagerTab.setViewPager(viewPager);
             ((TextView)viewPagerTab.getTabAt(0)).setTextColor(ContextCompat.getColor(AllMovieActivity.this, R.color.white));
             viewPagerTab.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -87,37 +72,6 @@ public class AllMovieActivity extends AppCompatActivity {
 
                 }
             });
-
-//            viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//                @Override
-//                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//                }
-//
-//                @Override
-//                public void onPageSelected(int position) {
-////                    mTabs.check(position);
-////                    RadioButton buttonSelected = (RadioButton) findViewById(RADIO_BUTTON[position]);
-////                    Drawable topButtonSelected = getResources().getDrawable(ICONS_SELECTED[position]);
-////                    buttonSelected.setCompoundDrawablesWithIntrinsicBounds(null, topButtonSelected, null, null);
-////
-////                    for (int index = 0; index < RADIO_BUTTON.length; index++) {
-////                        if (index != position) {
-////                            RadioButton button = (RadioButton) findViewById(RADIO_BUTTON[index]);
-////                            Drawable top = getResources().getDrawable(ICONS[index]);
-////                            button.setCompoundDrawablesWithIntrinsicBounds(null, top, null, null);
-////                        }
-////                    }
-////                    Storage.currentTabPosition = position;
-////                    Log.d(TAG, "CurRent position: " + Storage.currentTabPosition);
-//
-//                }
-//
-//                @Override
-//                public void onPageScrollStateChanged(int state) {
-//
-//                }
-//            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -146,7 +100,7 @@ public class AllMovieActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return new NowShowingFragment();
+                    return new NowShowingMovieFragment();
                 case  1:
                     return  new FavoriteFragment();
             }

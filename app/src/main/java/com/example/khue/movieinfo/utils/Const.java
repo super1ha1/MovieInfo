@@ -1,8 +1,6 @@
 package com.example.khue.movieinfo.utils;
 
-/**
- * Constant in the app
- */
+
 public class Const {
     public static String TAG_SUCCESS = "Movie Info Success";
     public static String TAG_FAILURE = "Movie Info Failure";
@@ -16,10 +14,8 @@ public class Const {
     public static String VIDEO_FRAGMENT = "VIDEO_FRAGMENT";
 
 
-//    http://image.tmdb.org/t/p/w500/SFsxFDUhRuuxWQbkTar9iVorPv.jpg?api_key=4df263f48a4fe2621749627f5d001b
     public static final String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/w500";
 
-    //        http://img.youtube.com/vi/bvu-zlR5A8Q/hqdefault.jpg
     public static final String BASE_YOUTUBE_URL = "http://img.youtube.com/vi/";
     public static final String BASE_YOUTUBE_IMAGE = "/sddefault.jpg";
 

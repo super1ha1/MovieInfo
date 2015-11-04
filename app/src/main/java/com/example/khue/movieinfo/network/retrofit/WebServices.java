@@ -16,9 +16,6 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * All
- */
 public class WebServices {
     private static final String BASE_URL = "http://api.themoviedb.org/3";
     private static final String UPCOMING_END_POINT = "/movie/upcoming";
@@ -32,16 +29,6 @@ public class WebServices {
                 @Override
                 public void success(MovieList movieList, Response response) {
                     try {
-//                        Gson gson = new Gson();
-//                        String jsonString = gson.toJson(movieList);
-//                        Utils.writeToFile(context, jsonString, "before.txt");
-//                        if (jsonString.contains("\"status_code\"")) {
-//                            JSONObject error = new JSONObject(jsonString);
-//                            callback.failure(error);
-//                        } else {
-//                            JSONObject object = new JSONObject(jsonString);
-//                            callback.success(object);
-//                        }
                         callback.success(movieList);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -78,16 +65,6 @@ public class WebServices {
                 @Override
                 public void success(RelatedMovieList objectReceive, Response response) {
                     try {
-//                        Gson gson = new Gson();
-//                        String jsonString = gson.toJson(objectReceive);
-//
-//                        if (jsonString.contains("\"status_code\"")) {
-//                            JSONObject error = new JSONObject(jsonString);
-//                            callback.failure(error);
-//                        } else {
-//                            JSONObject object = new JSONObject(jsonString);
-//                            callback.success(object);
-//                        }
                         callback.success(objectReceive);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -124,16 +101,6 @@ public class WebServices {
                 @Override
                 public void success(VideoList objectReceive, Response response) {
                     try {
-//                        Gson gson = new Gson();
-//                        String jsonString = gson.toJson(objectReceive);
-//
-//                        if (jsonString.contains("\"status_code\"")) {
-//                            JSONObject error = new JSONObject(jsonString);
-//                            callback.failure(error);
-//                        } else {
-//                            JSONObject object = new JSONObject(jsonString);
-//                            callback.success(object);
-//                        }
                         callback.success(objectReceive);
                     } catch (Exception e) {
                         e.printStackTrace();

@@ -1,4 +1,4 @@
-package com.example.khue.movieinfo;
+package com.example.khue.movieinfo.presentation.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,18 +12,20 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.example.khue.movieinfo.R;
 import com.example.khue.movieinfo.model.Movie;
 import com.example.khue.movieinfo.network.callbacks.DataOperationCallBack;
 import com.example.khue.movieinfo.network.data_management.DataHolder;
 import com.example.khue.movieinfo.network.data_management.DataManager;
+import com.example.khue.movieinfo.presentation.activities.MovieDetailActivity;
+import com.example.khue.movieinfo.presentation.adapter.MovieListAdapter;
 import com.example.khue.movieinfo.utils.Const;
-import com.example.khue.movieinfo.utils.Utils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class NowShowingFragment extends Fragment {
+public class NowShowingMovieFragment extends Fragment {
 
     private View rootView;
     @Bind(R.id.grid_view_now_showing) GridView  gridView;
@@ -35,12 +37,12 @@ public class NowShowingFragment extends Fragment {
     private int previousTotal = 0;
     private boolean loading = true;
 
-    public static NowShowingFragment newInstance() {
-        NowShowingFragment fragment = new NowShowingFragment();
+    public static NowShowingMovieFragment newInstance() {
+        NowShowingMovieFragment fragment = new NowShowingMovieFragment();
         return fragment;
     }
 
-    public NowShowingFragment() {
+    public NowShowingMovieFragment() {
         // Required empty public constructor
     }
 
@@ -72,7 +74,6 @@ public class NowShowingFragment extends Fragment {
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v,
                                         int position, long id) {
-                    Utils.showToast(getActivity(), "pos: " + position + " clicked!");
                     Movie movie = DataHolder.getInstance().getMovieListFromAPI().get(position);
                     Log.d(Const.TAG_APP, "Start movie detail with movie at pos: " + position
                             + " title: " + movie.getTitle());

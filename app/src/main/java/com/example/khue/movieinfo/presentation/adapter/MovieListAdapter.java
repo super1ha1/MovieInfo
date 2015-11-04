@@ -1,4 +1,4 @@
-package com.example.khue.movieinfo;
+package com.example.khue.movieinfo.presentation.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.example.khue.movieinfo.R;
 import com.example.khue.movieinfo.model.Movie;
 import com.example.khue.movieinfo.utils.Const;
 import com.example.khue.movieinfo.utils.Utils;
@@ -21,9 +22,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Adapter of the grid view
- */
+
 public class MovieListAdapter extends BaseAdapter {
     ImageLoader imageLoader ;
     private Context mContext;

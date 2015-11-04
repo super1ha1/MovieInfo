@@ -1,8 +1,9 @@
-package com.example.khue.movieinfo;
+package com.example.khue.movieinfo.presentation.fragment;
 
 import android.app.Fragment;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,12 +13,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.example.khue.movieinfo.R;
+import com.example.khue.movieinfo.presentation.adapter.VideoListAdapter;
 import com.example.khue.movieinfo.model.MovieVideo;
 import com.example.khue.movieinfo.model.VideoList;
 import com.example.khue.movieinfo.network.callbacks.DataOperationCallBack;
 import com.example.khue.movieinfo.network.data_management.DataHolder;
 import com.example.khue.movieinfo.network.data_management.DataManager;
 import com.example.khue.movieinfo.utils.Const;
+import com.example.khue.movieinfo.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +35,7 @@ public class TrailerFragment extends Fragment {
     private VideoListAdapter videoListAdapter;
     private static final String ARG_PARAM1 = "MOVIE_ID";
 
-
-
+    
     public static TrailerFragment newInstance(String param1) {
         TrailerFragment fragment = new TrailerFragment();
         Bundle args = new Bundle();
@@ -74,19 +77,24 @@ public class TrailerFragment extends Fragment {
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v,
                                         int position, long id) {
-                    MovieVideo video = DataHolder.getInstance().getMovieVideoMap().get(movieId).getMovieVideos().get(position);
-                    String youtubeId = video.getKey();
                     try {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + youtubeId));
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        Log.d(Const.TAG_APP, "Open using youtube app");
-                    }catch(ActivityNotFoundException e) {
-                        // youtube is not installed.Will be opened in other available apps
-                        String content = "http://www.youtube.com/watch?v=" + youtubeId;
-                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(content));
-                        startActivity(i);
-                        Log.d(Const.TAG_APP, "Open using other  app");
+                        Utils.showToast(getActivity(), getActivity().getResources().getString(R.string.open_video));
+                        MovieVideo video = DataHolder.getInstance().getMovieVideoMap().get(movieId).getMovieVideos().get(position);
+                        String youtubeId = video.getKey();
+                        try {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + youtubeId));
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            Log.d(Const.TAG_APP, "Open using youtube app");
+                        }catch(ActivityNotFoundException e) {
+                            // youtube is not installed.Will be opened in other available apps
+                            String content = "http://www.youtube.com/watch?v=" + youtubeId;
+                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(content));
+                            startActivity(i);
+                            Log.d(Const.TAG_APP, "Open using other  app");
+                        }
+                    } catch (Resources.NotFoundException e) {
+                        e.printStackTrace();
                     }
                 }
             });

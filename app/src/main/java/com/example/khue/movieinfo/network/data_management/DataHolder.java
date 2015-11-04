@@ -13,8 +13,8 @@ import java.util.List;
 import javax.inject.Singleton;
 
 /**
- * Class holder for all the object data (not in Preference manager)
- * object retrieved from database or API would be reference here
+ * Singleton Class holder for all the object data
+ *
  */
 @Singleton
 public class DataHolder {

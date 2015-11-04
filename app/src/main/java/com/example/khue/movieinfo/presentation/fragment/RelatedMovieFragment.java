@@ -1,4 +1,4 @@
-package com.example.khue.movieinfo;
+package com.example.khue.movieinfo.presentation.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -11,13 +11,15 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.example.khue.movieinfo.R;
 import com.example.khue.movieinfo.model.Movie;
 import com.example.khue.movieinfo.model.RelatedMovieList;
 import com.example.khue.movieinfo.network.callbacks.DataOperationCallBack;
 import com.example.khue.movieinfo.network.data_management.DataHolder;
 import com.example.khue.movieinfo.network.data_management.DataManager;
+import com.example.khue.movieinfo.presentation.activities.MovieDetailActivity;
+import com.example.khue.movieinfo.presentation.adapter.MovieListAdapter;
 import com.example.khue.movieinfo.utils.Const;
-import com.example.khue.movieinfo.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +118,6 @@ public class RelatedMovieFragment extends Fragment {
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v,
                                         int position, long id) {
-                    Utils.showToast(getActivity(), "pos: " + position + " clicked!");
                     Movie movie = DataHolder.getInstance().getRelatedMovieMap()
                             .get(movieId).getMovies().get(position);
                     Log.d(Const.TAG_APP, "Start movie detail with movie at pos: " + position
